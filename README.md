@@ -1,11 +1,5 @@
-# english-lab
 
+git clone repo
 
-## Instalamos el entorno
+git push origin master
 
-apt-get install eclipse
-
-
-## Descargamos el repositorio como
-
-git clone 
