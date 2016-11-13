@@ -39,7 +39,7 @@ $base_pages=$enlaces;
 
 //print_r($base_pages);
 
-$fp0 = fopen('execBash-'.$hoy, 'a+');
+$fp0 = fopen('../0files/execBash-'.$hoy.'.sh', 'a+');
 fwrite($fp0,"\ncurl -o voafile0.mp3 http://gandalf.ddo.jp/mp3/".str_replace("-","",substr($hoy,2)).".mp3\n");
 fwrite($fp0,"\nmv voafile0.mp3 aux_voafile0.mp3\n");
 fwrite($fp0,"\navconv -y -i 'aux_voafile0.mp3' -acodec libmp3lame -b:a 64k -ac 1 -ar 44100 'voafile0.mp3'\n");
@@ -54,7 +54,7 @@ foreach($contents as $content) {
 $contenido=$content->textContent;
 }
 
-$fp1 = fopen('texto.txt', 'a+');
+$fp1 = fopen('../0files/texto.txt', 'a+');
 fwrite($fp1,"% Voa News ".$hoy."\n");
 fwrite($fp1,"% Compilación JEI\n");  
 fwrite($fp1,"\n\n\n"); 
@@ -104,7 +104,7 @@ if ( preg_match ( '/VOA_Standard_English/' ,$base_page) || preg_match ( '/VOA_Sp
 // Escribimos un fichero con comandos bash para construir el archivo de audio
 
 $i++;
-$fp0 = fopen('execBash-'.$hoy, 'a+');
+$fp0 = fopen('../0files/execBash-'.$hoy.'.sh', 'a+');
 $playbar=trim($playbar);
 fwrite($fp0,"\ncurl -o voafile".$i.".mp3 ".$playbar."\n");
 fwrite($fp0,"\nmv voafile".$i.".mp3 aux_voafile".$i.".mp3\n");
@@ -112,7 +112,7 @@ fwrite($fp0,"\navconv -y -i 'aux_voafile".$i.".mp3' -acodec libmp3lame -b:a 64k 
 fclose($fp0);
 
 
-$fp1 = fopen('texto.txt', 'a+');
+$fp1 = fopen('../0files/texto.txt', 'a+');
 $titulo=preg_replace('/&#[0-9][0-9][0-9][0-9][0-9];/', '', $titulo); // Quita los caracteres chinos
 fwrite($fp1,"\n".strip_tags($titulo)."");
 fwrite($fp1,"----------------------------------------------------------------------------\n");
@@ -135,14 +135,14 @@ fclose($fp1);
 
 }
 
-$fp0 = fopen('execBash-'.$hoy, 'a+');
+$fp0 = fopen('../0files/execBash-'.$hoy.'.sh', 'a+');
 fwrite($fp0,"\nconvert COVER_mp3.jpg  -font Arial -pointsize 52 -draw \"gravity north fill black  text 0,230 '".$hoy."' fill yellow  text 1,234 '".$hoy."' \" cover_mp3.jpg\n");
 fwrite($fp0,"\nmp3wrap aux.mp3 voafile{0..".$i."}.mp3\n");
 fwrite($fp0,"\nlame -m m -b 64 aux_MP3WRAP.mp3 --id3v2-only --ignore-tag-errors --ta 'Internet' --tt 'VoaNews ".$hoy."' --ti 'cover_mp3.jpg' VoaNews-".$hoy.".mp3\n");
 fwrite($fp0,"\nrm aux* voafile* cover_mp3.jpg\n");
 fclose($fp0);
 
-$fp2 = fopen('execBash-'.$hoy, 'a+');
+$fp2 = fopen('../0files/execBash-'.$hoy.'.sh', 'a+');
 fwrite($fp2,"\nconvert COVER_book.jpg  -font Arial -pointsize 52 -draw \"gravity north fill black  text 10,270 '".$hoy."' fill yellow  text 12,274 '".$hoy."' \" cover_book.jpg\n");
 fwrite($fp2,"\npandoc texto.txt -o aux_texto.md --parse-raw\n");
 fwrite($fp2,"\npandoc texto.txt -o  VoaNews-".$hoy.".epub --epub-cover-image=cover_book.jpg  --toc\n");
