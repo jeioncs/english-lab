@@ -6,15 +6,21 @@
 // Construimos la base de datos con todos los artículos en 51voa.com
 
 $enlaces = array();
+
 $doc = new DOMDocument;
+
 $aux = new DOMDocument;
+
 $bd = new SQLite3('../0files/test.db');
-$bd->exec('CREATE TABLE voanews (fecha STRING, enlace STRING,seccion STRING)');
+
+// $bd->exec('CREATE TABLE voanews (fecha STRING, enlace STRING,seccion STRING)');
 
 date_default_timezone_set('Europe/Madrid');
 $hoy=date('Y\-m\-j');
 
-$secciones=array("as_it_is","Agriculture_Report","Technology_Report","This_is_America","Science_in_the_News","Health_Report","Education_Report","Economics_Report","American_Mosaic","In_the_News","American_Stories","Words_And_Their_Stories","Everyday_Grammar","National_Parks","Explorations","The_Making_of_a_Nation","People_in_America");
+// "as_it_is","Agriculture_Report","Technology_Report","This_is_America","Science_in_the_News","Health_Report","Education_Report",
+
+$secciones=array("Economics_Report","American_Mosaic","In_the_News","American_Stories","Words_And_Their_Stories","Everyday_Grammar","National_Parks","Explorations","The_Making_of_a_Nation","People_in_America");
 
 
 foreach($secciones as $seccion) {
