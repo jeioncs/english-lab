@@ -3,13 +3,13 @@
 
 //error_reporting(E_ALL);
 //ini_set("display_errors", 1);
-
+// Construimos la base de datos con todos los artículos en 51voa.com
 
 $enlaces = array();
 $doc = new DOMDocument;
 $aux = new DOMDocument;
 $bd = new SQLite3('../0files/test.db');
-$bd->exec('CREATE TABLE voanews (fecha STRING, enlace STRING)');
+$bd->exec('CREATE TABLE voanews (fecha STRING, enlace STRING,seccion STRING)');
 
 date_default_timezone_set('Europe/Madrid');
 $hoy=date('Y\-m\-j');
@@ -42,7 +42,7 @@ foreach($secciones as $seccion) {
 					$aux=$link->getAttribute('href');
 					$enlaceValido="\"".$matches[0]."\",\"http://www.51voa.com".$aux."\"";
 					$enlaceValido= str_replace("\"","'",$enlaceValido);
-					$bd->exec("INSERT INTO voanews (fecha, enlace) VALUES (".$enlaceValido.")");
+					$bd->exec("INSERT INTO voanews (fecha, enlace,seccion) VALUES (".$enlaceValido.",'".$seccion."')");
 					//array_push($enlaces, $enlaceValido);
 				}
 			}
