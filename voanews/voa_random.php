@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-$fecha='11-11-11';
+$fecha='12-12-12';
 
 if ($_POST) {
 	$fecha=$_POST['fecha'];
@@ -12,7 +12,7 @@ if ($_POST) {
 
 
 <form action="" method="post">
-    Introduce una fecha:  <input type="text" name="fecha" /><br />
+    Introduce una fecha (yy-mm-dd):  <input type="text" name="fecha" /><br />
     <input type="submit" value="¡enviar!" />
 </form>
 <hr>
@@ -23,14 +23,18 @@ if ($_POST) {
 $i=0;
 $doc = new DOMDocument;
 $hoy = $fecha;
-$db = new SQLite3('../0files/test.db');
-$query="SELECT enlace FROM voanews WHERE fecha LIKE '".$hoy."'"; 
+$base_pages = array();
+$db = new SQLite3('../data/voanewsBBDD.db');
+$hoydb=str_replace("-0","-",$hoy);
+$query="SELECT enlace FROM voanews WHERE fecha LIKE '".$hoydb."'"; 
 echo $query;
 $results = $db->query($query);
 while ($row = $results->fetchArray()) {
-	var_dump($row);
+	array_push($base_pages, $row['enlace']);
 }
-/*
+
+$hoy="20".$fecha;
+
 $fp0 = fopen('../0files/execBash-'.$hoy.'.sh', 'a+');
 fwrite($fp0,"\ncp ../voanews/*.jpg ./ \n");
 fwrite($fp0,"\ncurl -o voafile0.mp3 http://gandalf.ddo.jp/mp3/".str_replace("-","",substr($hoy,2)).".mp3\n");
@@ -142,6 +146,6 @@ fwrite($fp2,"\npandoc texto.txt -o  VoaNews-".$hoy.".epub --epub-cover-image=cov
 fwrite($fp2,"\nrm texto.txt  aux_texto.md *.jpg \n");
 fclose($fp2);
 
-*/
+
 
 ?>
