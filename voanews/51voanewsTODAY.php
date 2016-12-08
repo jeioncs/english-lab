@@ -6,10 +6,11 @@ $i=0;
 $doc = new DOMDocument;
 
 date_default_timezone_set('Europe/Madrid');
-$hoy=date('Y\-m\-j');
+//$hoy=date('Y\-m\-j');
+$hoy="2016-12-07";
 
 $paginas_revisar = array();
-$paginas_revisar = array("http://www.51voa.com/VOA_Special_English/","http://www.51voa.com/VOA_Standard_English/");
+$paginas_revisar = array("http://www.51voa.com");
 $enlaces = array();
 
 foreach ($paginas_revisar as &$pagina) {
@@ -80,7 +81,8 @@ foreach($base_pages as &$base_page) {
 
 	if ( preg_match ( '/VOA_Standard_English/' ,$base_page) || preg_match ( '/VOA_Special_English/' ,$base_page)){
 
-		$page = iconv('UTF-8', 'UTF-8//IGNORE',file_get_contents($base_page));
+		do{sleep(10);$fgc=file_get_contents($base_page);}while($fgc==FALSE);
+		$page = iconv('UTF-8', 'UTF-8//IGNORE',$fgc);
 
 		$doc = new DOMDocument;
 		$doc->loadHTML($page);
@@ -131,6 +133,8 @@ foreach($base_pages as &$base_page) {
 		$texto= str_replace("</h2>","**\r\n",$texto);
 		$texto= str_replace("** **","",$texto);
 		$texto= str_replace("****","**",$texto);
+		// Añadido porque habia muchos asteriscos sin negrita
+		$texto= str_replace("** "," **",$texto);
 		$texto= strip_tags($texto);
 		fwrite($fp1,"\n".$texto."");
 		fclose($fp1);

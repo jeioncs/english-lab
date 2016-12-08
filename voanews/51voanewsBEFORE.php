@@ -7,7 +7,7 @@ $doc = new DOMDocument;
 
 date_default_timezone_set('Europe/Madrid');
 //$hoy=date('Y\-m\-j');
-$hoy="2016-12-02";
+$hoy="2016-12-07";
 
 $paginas_revisar = array();
 $paginas_revisar = array("http://www.51voa.com/VOA_Special_English/","http://www.51voa.com/VOA_Standard_English/");
