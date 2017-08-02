@@ -14,3 +14,8 @@ git commit -m "Comentarios"
 
 git push origin master
 
+----------------------------------------------------------
+
+Debemos intentar poner los repositorios como:
+
+
