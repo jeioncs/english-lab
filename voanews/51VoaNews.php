@@ -7,7 +7,7 @@ $doc = new DOMDocument;
 
 date_default_timezone_set('Europe/Madrid');
 //$hoy=date('Y\-m\-j');
-$hoy="2017-08-03";
+$hoy="2017-08-02";
 
 
 $paginas_revisar = array();
@@ -46,7 +46,7 @@ $base_pages=$enlaces;
 print_r($base_pages);
 
 $fp0 = fopen('../0files/execBash-'.$hoy.'.sh', 'a+');
-fwrite($fp0,"\ncp ../voanews/*.jpg ./ \n");
+fwrite($fp0,"\ncp ../data/*.jpg ./ \n");
 
 fwrite($fp0,"\nwget -O voafile0.mp3 http://gandalf.ddo.jp/mp3/".str_replace("-","",substr($hoy,2)).".mp3\n");
 
@@ -63,7 +63,7 @@ foreach($contents as $content) {
 	$contenido=$content->textContent;
 }
 
-$fp1 = fopen('../0files/texto.txt', 'a+');
+$fp1 = fopen('../0files/texto'.$hoy.'.txt', 'a+');
 fwrite($fp1,"% Voa News ".$hoy."\n");
 fwrite($fp1,"% Compilación JEI\n");
 fwrite($fp1,"\n\n\n");
@@ -124,7 +124,7 @@ foreach($base_pages as &$base_page) {
 		fclose($fp0);
 
 
-		$fp1 = fopen('../0files/texto.txt', 'a+');
+		$fp1 = fopen('../0files/texto'.$hoy.'.txt', 'a+');
 		$titulo=preg_replace('/&#[0-9][0-9][0-9][0-9][0-9];/', '', $titulo); // Quita los caracteres chinos
 		fwrite($fp1,"\n".strip_tags($titulo)."");
 		fwrite($fp1,"----------------------------------------------------------------------------\n");
@@ -158,12 +158,12 @@ fclose($fp0);
 
 $fp2 = fopen('../0files/execBash-'.$hoy.'.sh', 'a+');
 fwrite($fp2,"\nconvert COVER_book.jpg  -font Arial -pointsize 52 -draw \"gravity north fill black  text 10,270 '".$hoy."' fill yellow  text 12,274 '".$hoy."' \" cover_book.jpg\n");
-fwrite($fp2,"\npandoc texto.txt -o aux_texto.md --parse-raw\n");
-fwrite($fp2,"\npandoc texto.txt -o  VoaNews-".$hoy.".epub --epub-cover-image=cover_book.jpg  --toc\n");
+fwrite($fp2,"\npandoc texto".$hoy.".txt -o aux_texto.md --parse-raw\n");
+fwrite($fp2,"\npandoc texto".$hoy.".txt -o  VoaNews-".$hoy.".epub --epub-cover-image=cover_book.jpg  --toc\n");
 
-fwrite($fp2,"\npandoc  -s -S texto.txt -o  VoaNews-".$hoy.".docx \n");
+fwrite($fp2,"\npandoc  -s -S texto".$hoy.".txt -o  VoaNews-".$hoy.".docx \n");
 
-fwrite($fp2,"\nrm texto.txt  aux_texto.md *.jpg \n");
+fwrite($fp2,"\nrm texto".$hoy.".txt  aux_texto.md *.jpg \n");
 fclose($fp2);
 
 ?>
